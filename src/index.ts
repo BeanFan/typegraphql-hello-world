@@ -20,7 +20,7 @@ declare module "express-session" {
 
 declare module "express" {
   interface Request {
-    session: any;
+    session: session.Session;
   }
 }
 
@@ -31,6 +31,11 @@ const main = async () => {
     resolvers: [RegisterResolver, LoginResolver, MeResolver],
     authChecker: ({ context: { req } }) => {
       return !!req.session.userId;
+      // here we can read the user from context
+      // and check his permission in the db against the `roles` argument
+      // that comes from the `@Authorized` decorator, eg. ["ADMIN", "MODERATOR"]
+
+      // return true; // or false if access is denied
     },
   });
 

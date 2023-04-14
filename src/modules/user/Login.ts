@@ -24,6 +24,7 @@ export class LoginResolver {
     if (!valid) {
       return null;
     }
+
     console.log(ctx.req.session);
     ctx.req.session!.userId = user.id;
     return user;
