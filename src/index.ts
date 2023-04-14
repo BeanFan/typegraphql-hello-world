@@ -4,13 +4,15 @@ import Express from "express";
 import { buildSchema } from "type-graphql";
 import { createConnection } from "typeorm";
 import session from "express-session";
-// import connectRedis from "connect-redis";
+import connectRedis from "connect-redis";
 import cors from "cors";
 
 import { RegisterResolver } from "./modules/user/Register";
-// import { redis } from "./redis";
+import { redis } from "./redis";
 import { LoginResolver } from "./modules/user/Login";
 import { MeResolver } from "./modules/user/Me";
+import { ConfirmUserResolver } from "./modules/user/ConfirmUser";
+// import { sendEmail } from "./utils/SendEmail";
 // import cookieParser from "cookie-parser";
 declare module "express-session" {
   interface Session {
@@ -28,7 +30,12 @@ const main = async () => {
   await createConnection();
 
   const schema = await buildSchema({
-    resolvers: [RegisterResolver, LoginResolver, MeResolver],
+    resolvers: [
+      RegisterResolver,
+      LoginResolver,
+      MeResolver,
+      ConfirmUserResolver,
+    ],
     authChecker: ({ context: { req } }) => {
       return !!req.session.userId;
       // here we can read the user from context
@@ -46,7 +53,7 @@ const main = async () => {
 
   const app = Express();
 
-  // const RedisStore = connectRedis(session);
+  const RedisStore = connectRedis(session);
 
   app.use(
     cors({
@@ -57,9 +64,9 @@ const main = async () => {
 
   app.use(
     session({
-      // store: new RedisStore({
-      //   client: redis as any,
-      // }),
+      store: new RedisStore({
+        client: redis as any,
+      }),
       name: "qid",
       secret: "aslkdfjoiq12312",
       resave: false,
@@ -76,6 +83,7 @@ const main = async () => {
 
   app.listen(4000, () => {
     console.log("server started on http://localhost:4000/graphql");
+    // sendEmail();
   });
 };
 
