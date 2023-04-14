@@ -22,7 +22,7 @@ export async function sendEmail(url: string, email: string) {
   let info = await transporter.sendMail({
     from: "Bean@Admin", // sender address
     to: email, // list of receivers
-    subject: "Active your profile", // Subject line
+    subject: "Verify Email", // Subject line
     text: "Hello world, please input below ", // plain text body
     html: `<a href=${url}>${url}</a>`, // html body
   });

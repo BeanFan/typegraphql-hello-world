@@ -12,6 +12,7 @@ import { redis } from "./redis";
 import { LoginResolver } from "./modules/user/Login";
 import { MeResolver } from "./modules/user/Me";
 import { ConfirmUserResolver } from "./modules/user/ConfirmUser";
+import { ForgetPassWordResovler } from "./modules/user/ForgetPassWord";
 // import { sendEmail } from "./utils/SendEmail";
 // import cookieParser from "cookie-parser";
 declare module "express-session" {
@@ -30,12 +31,14 @@ const main = async () => {
   await createConnection();
 
   const schema = await buildSchema({
-    resolvers: [
-      RegisterResolver,
-      LoginResolver,
-      MeResolver,
-      ConfirmUserResolver,
-    ],
+    // resolvers: [
+    //   RegisterResolver,
+    //   LoginResolver,
+    //   MeResolver,
+    //   ConfirmUserResolver,
+    //   ForgetPassWordResovler,
+    // ],
+    resolvers: [__dirname + "/modules/**/*.ts"],
     authChecker: ({ context: { req } }) => {
       return !!req.session.userId;
       // here we can read the user from context
