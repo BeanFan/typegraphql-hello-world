@@ -25,6 +25,9 @@ declare module "express" {
   interface Request {
     session: session.Session;
   }
+  interface Response {
+    clearCookie: any;
+  }
 }
 
 const main = async () => {
@@ -51,7 +54,7 @@ const main = async () => {
 
   const apolloServer = new ApolloServer({
     schema,
-    context: ({ req }: any) => ({ req }),
+    context: ({ req, res }: any) => ({ req, res }),
   });
 
   const app = Express();
