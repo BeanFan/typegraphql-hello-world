@@ -14,8 +14,11 @@ import { MeResolver } from "./modules/user/resovler/Me";
 import { ConfirmUserResolver } from "./modules/user/resovler/ConfirmUser";
 import { ForgetPassWordResovler } from "./modules/user/resovler/ForgetPassWord";
 import { createSchema } from "./modules/utils/createSchema";
-// import { sendEmail } from "./utils/SendEmail";
-// import cookieParser from "cookie-parser";
+import {
+  getComplexity,
+  simpleEstimator,
+  createComplexityRule,
+} from "graphql-query-complexity";
 declare module "express-session" {
   interface Session {
     userId: any;
@@ -39,6 +42,19 @@ const main = async () => {
   const apolloServer = new ApolloServer({
     schema,
     context: ({ req, res }: any) => ({ req, res }),
+    validationRules: [
+      createComplexityRule({
+        estimators: [
+          // Configure your estimators
+          simpleEstimator({ defaultComplexity: 1 }),
+        ],
+        maximumComplexity: 800000,
+        variables: {},
+        onComplete: (complexity: number) => {
+          console.log("Query Complexity:", complexity);
+        },
+      }) as any,
+    ],
   });
 
   const app = Express();
