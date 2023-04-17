@@ -11,7 +11,9 @@ export class MeResolver {
   async me(@Ctx() ctx: MyContext): Promise<User | undefined> {
     if (!ctx.req.session!.userId) {
       return undefined;
-    }
+    } 
+
+    
 
     return User.findOne(ctx.req.session!.userId);
   }
