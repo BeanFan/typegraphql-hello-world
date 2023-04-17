@@ -9,7 +9,7 @@ export const createSchema = () =>
     //   ConfirmUserResolver,
     //   ForgetPassWordResovler,
     // ],
-    resolvers: [__dirname + "/../*/*.ts"],
+    resolvers: [__dirname + "/../**/resovler/*.ts"],
     authChecker: ({ context: { req } }) => {
       return !!req.session.userId;
       // here we can read the user from context

@@ -1,9 +1,9 @@
 import { Resolver, Query, Mutation, Arg, Authorized } from "type-graphql";
 import bcryptjs from "bcryptjs";
-import { User } from "../../entity/User";
-import { RegisterInput } from "./register/RegisterInput";
-import { sendEmail } from "../utils/sendEmail";
-import { createConfrimUrl } from "../utils/createConfrimUrl";
+import { User } from "../../../entity/User";
+import { RegisterInput } from "../register/RegisterInput";
+import { sendEmail } from "../../utils/sendEmail";
+import { createConfrimUrl } from "../../utils/createConfrimUrl";
 
 // @Resolver(User)  need add this when add FiledResolver of user
 @Resolver()

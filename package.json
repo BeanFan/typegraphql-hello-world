@@ -6,7 +6,7 @@
   "scripts": {
     "startvback": "nodemon --exec ts-node src/index.ts",
     "start": "ts-node-dev --respawn src/index.ts",
-    "db:setup":"ts-node src/test-utils/setup.ts",
+    "db:setup": "ts-node src/test-utils/setup.ts",
     "test": "npm run db:setup & jest"
   },
   "author": "",
@@ -29,6 +29,7 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
+    "@faker-js/faker": "^7.6.0",
     "@types/bcryptjs": "^2.4.2",
     "@types/connect-redis": "^0.0.8",
     "@types/cors": "^2.8.4",
@@ -47,4 +48,3 @@
     "typescript": "^5.0.4"
   }
 }
- 

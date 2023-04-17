@@ -1,14 +1,14 @@
 import { Resolver, Mutation, Arg /*Ctx*/, Ctx } from "type-graphql";
-import { User } from "../../entity/User";
+import { User } from "../../../entity/User";
 // import { MyContext } from "../../types/MyContext";
-import { redis } from "../../redis";
+import { redis } from "../../../redis";
 import {
   confirmUserPrefix,
   forgotPasswordPrefix,
-} from "../constants/redisPrefixs";
+} from "../../constants/redisPrefixs";
 import bcryptjs from "bcryptjs";
 import { MyContext } from "src/types/MyContext";
-import { ChangePasswordInput } from "./changepassword/ChangePassword";
+import { ChangePasswordInput } from "../changepassword/ChangePassword";
 // @Resolver(User)  need add this when add FiledResolver of user
 @Resolver()
 export class ChangePasswordResvoler {

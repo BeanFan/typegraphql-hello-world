@@ -7,12 +7,12 @@ import session from "express-session";
 import connectRedis from "connect-redis";
 import cors from "cors";
 
-import { RegisterResolver } from "./modules/user/Register";
+import { RegisterResolver } from "./modules/user/resovler/Register";
 import { redis } from "./redis";
-import { LoginResolver } from "./modules/user/Login";
-import { MeResolver } from "./modules/user/Me";
-import { ConfirmUserResolver } from "./modules/user/ConfirmUser";
-import { ForgetPassWordResovler } from "./modules/user/ForgetPassWord";
+import { LoginResolver } from "./modules/user/resovler/Login";
+import { MeResolver } from "./modules/user/resovler/Me";
+import { ConfirmUserResolver } from "./modules/user/resovler/ConfirmUser";
+import { ForgetPassWordResovler } from "./modules/user/resovler/ForgetPassWord";
 import { createSchema } from "./modules/utils/createSchema";
 // import { sendEmail } from "./utils/SendEmail";
 // import cookieParser from "cookie-parser";
@@ -35,8 +35,6 @@ const main = async () => {
   await createConnection();
 
   const schema = await createSchema();
-
-  console.log(schema);
 
   const apolloServer = new ApolloServer({
     schema,

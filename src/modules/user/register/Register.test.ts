@@ -2,7 +2,9 @@ import { Connection } from "typeorm";
 
 import { testCon } from "../../../test-utils/testConn";
 import { gCall } from "../../../test-utils/gCall";
-
+import { User } from "src/entity/User";
+import { faker } from "@faker-js/faker";
+import bcry from "bcryptjs";
 let conn: Connection;
 beforeAll(async () => {
   conn = await testCon();
@@ -22,23 +24,30 @@ mutation Register($data: RegisterInput!) {
     email
     name
   }
-}
+}   
 `;
 
 describe("Register", () => {
   it("create user", async () => {
-    console.log(
-      await gCall({
-        source: registerMutation,
-        variableValues: {
-          data: {
-            firstName: "bob",
-            lastName: "bob2",
-            email: "bob@bob.com",
-            password: "asdfasdf",
-          },
-        },
-      })
-    );
+    const user = {
+      firstName: faker.name.firstName(),
+      lastName: faker.name.lastName(),
+      email: faker.internet.email(),
+      password: faker.internet.password(),
+    };
+    let result = await gCall({
+      source: registerMutation,
+      variableValues: {
+        data: user,
+      },
+    });
+
+    console.log(JSON.stringify(result));
+    let { firstName, lastName, email } = user;
+    expect(result).toBeDefined();
+    expect(result).toMatchObject({
+      data: { register: { firstName, lastName, email } },
+    });
+    expect(result.data!.register.confirmed).toBeFalsy();
   });
 });
