@@ -13,6 +13,7 @@ import { LoginResolver } from "./modules/user/Login";
 import { MeResolver } from "./modules/user/Me";
 import { ConfirmUserResolver } from "./modules/user/ConfirmUser";
 import { ForgetPassWordResovler } from "./modules/user/ForgetPassWord";
+import { createSchema } from "./modules/utils/createSchema";
 // import { sendEmail } from "./utils/SendEmail";
 // import cookieParser from "cookie-parser";
 declare module "express-session" {
@@ -33,24 +34,9 @@ declare module "express" {
 const main = async () => {
   await createConnection();
 
-  const schema = await buildSchema({
-    // resolvers: [
-    //   RegisterResolver,
-    //   LoginResolver,
-    //   MeResolver,
-    //   ConfirmUserResolver,
-    //   ForgetPassWordResovler,
-    // ],
-    resolvers: [__dirname + "/modules/**/*.ts"],
-    authChecker: ({ context: { req } }) => {
-      return !!req.session.userId;
-      // here we can read the user from context
-      // and check his permission in the db against the `roles` argument
-      // that comes from the `@Authorized` decorator, eg. ["ADMIN", "MODERATOR"]
+  const schema = await createSchema();
 
-      // return true; // or false if access is denied
-    },
-  });
+  console.log(schema);
 
   const apolloServer = new ApolloServer({
     schema,
