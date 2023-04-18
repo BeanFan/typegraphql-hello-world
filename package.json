@@ -28,7 +28,9 @@
     "pg": "^8.10.0",
     "reflect-metadata": "^0.1.12",
     "type-graphql": "^0.16.0",
+    "typedi": "^0.10.0",
     "typeorm": "^0.2.11",
+    "typeorm-typedi-extensions": "^0.4.1",
     "uuid": "^9.0.0"
   },
   "devDependencies": {

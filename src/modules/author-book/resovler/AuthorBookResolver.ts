@@ -2,6 +2,9 @@ import { Arg, Int, Mutation, Query, Resolver } from "type-graphql";
 import { Author } from "../../../entity/Author";
 import { AuthorBook } from "../../../entity/AuthorBook";
 import { Book } from "../../../entity/Book";
+import { BookRepo } from "../../../repo/BookRepo";
+import { getCustomRepository } from "typeorm";
+
 
 @Resolver()
 export class AuthorBookResolver {
@@ -34,5 +37,13 @@ export class AuthorBookResolver {
   @Query(() => [Book])
   async books() {
     return Book.find();
+  }
+
+  @Query(() => Book)
+  async findOrCreate(@Arg("name") name: string): Promise<Book> {
+    const bookRepo = getCustomRepository(BookRepo);
+    let book = await bookRepo.findOrCreate({ name });
+    console.log(book);
+    return book;
   }
 }

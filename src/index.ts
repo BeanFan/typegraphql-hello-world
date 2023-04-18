@@ -1,7 +1,7 @@
 import "reflect-metadata";
 import { ApolloServer } from "apollo-server-express";
 import Express from "express";
-import { buildSchema } from "type-graphql";
+import { buildSchema, useContainer } from "type-graphql";
 import { createConnection } from "typeorm";
 import session from "express-session";
 import connectRedis from "connect-redis";
@@ -14,6 +14,8 @@ import { MeResolver } from "./modules/user/resovler/Me";
 import { ConfirmUserResolver } from "./modules/user/resovler/ConfirmUser";
 import { ForgetPassWordResovler } from "./modules/user/resovler/ForgetPassWord";
 import { createSchema } from "./modules/utils/createSchema";
+import { Container } from "typeorm-typedi-extensions";
+import * as typeorm from "typeorm";
 import {
   getComplexity,
   simpleEstimator,
@@ -33,7 +35,8 @@ declare module "express" {
     clearCookie: any;
   }
 }
-
+useContainer(Container);
+typeorm.useContainer(Container);
 const main = async () => {
   await createConnection();
 
