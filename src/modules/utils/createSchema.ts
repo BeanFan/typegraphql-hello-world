@@ -19,4 +19,3 @@ export const createSchema = () =>
       // return true; // or false if access is denied
     },
   });
-gi
